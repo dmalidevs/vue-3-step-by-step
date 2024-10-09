@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3"></script>
+</head>
+
+<body>
+    <div id="app">
+        <input type="text" v-model="message">
+        <h1>{{ message }} ({{ message.length }})</h1>
+    </div>
+    <script>
+        Vue.createApp({
+            data() {
+                return {
+                    message: 'Hello Vue!'
+                }
+            },
+            mounted() {
+                setTimeout(() => {
+                    this.message = 'Hello Vue 3!'
+                }, 3000);
+            }
+        }).mount('#app');
+    </script>
+</body>
+
+</html>

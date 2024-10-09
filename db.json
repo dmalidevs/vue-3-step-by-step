@@ -1,0 +1,34 @@
+{
+    "assignments": [
+        {
+            "id": 1,
+            "name": "EP1",
+            "completed": false,
+            "tags": "tag1"
+        },
+        {
+            "id": 2,
+            "name": "EP2",
+            "completed": false,
+            "tags": "tag3"
+        },
+        {
+            "id": 3,
+            "name": "EP3",
+            "completed": false,
+            "tags": "tag2"
+        },
+        {
+            "id": 4,
+            "name": "EP4",
+            "completed": false,
+            "tags": "tag1"
+        },
+        {
+            "id": 5,
+            "name": "EP5",
+            "completed": false,
+            "tags": "tag3"
+        }
+    ]
+}

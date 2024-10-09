@@ -1,29 +1,61 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-full">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://unpkg.com/vue@3"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body>
+<body class="h-full grid place-items-center">
     <div id="app">
-        <input type="text" v-model="message">
-        <h1>{{ message }} ({{ message.length }})</h1>
+        <h2>Assignments</h2>
+        <assignment-tags :assignments="assignments" v-model:currentTag="currentTag"></assignment-tags>
+        <ul>
+            <li v-for="assignment in filteredAssignments" :key="assignment.id">
+                <input type="checkbox" v-model="assignment.completed">
+                <span>{{ assignment.id }}</span>
+                <span>{{ assignment.name }}</span>
+                <span>{{ assignment.completed }}</span>
+                <span>{{ assignment.tags }}</span>
+            </li>
+        </ul>
+        <assignment-create @createAssignment="addAssignment"></assignment-create>
     </div>
-    <script>
+    <script type="module">
+        import AssignmentCreate from './js/components/AssignmentCreate.js';
+        import AssignmentTags from './js/components/AssignmentTags.js';
         Vue.createApp({
+            components: { AssignmentCreate, AssignmentTags },
             data() {
                 return {
-                    message: 'Hello Vue!'
+                    assignments: [],
+                    currentTag: 'all'
                 }
             },
-            mounted() {
-                setTimeout(() => {
-                    this.message = 'Hello Vue 3!'
-                }, 3000);
+            methods: {
+                addAssignment(name) {
+                    this.assignments.push({
+                        id: this.assignments.length + 1,
+                        name: name,
+                        completed: false
+                    });
+                }
+            },
+            computed: {
+                filteredAssignments() {
+                    if (this.currentTag === 'all') {
+                        return this.assignments;
+                    }
+                    return this.assignments.filter(assignment => assignment.tags === this.currentTag)
+                },
+            },
+            created() {
+                fetch('http://localhost:3001/assignments')
+                    .then(response => response.json())
+                    .then(data => this.assignments = data);
             }
         }).mount('#app');
     </script>
